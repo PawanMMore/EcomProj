@@ -65,7 +65,6 @@ public class FakeStoreProductService implements IProductService{
             for(FakestoreProductDto fakestoreProductDto: fakestoreProductDtos){
                 products.add(fakestoreProductDto.from(fakestoreProductDto));
             }
-
             return products;
         }
         return null;
@@ -79,7 +78,7 @@ public class FakeStoreProductService implements IProductService{
                 fakestoreProductDto,
                 ResponseEntity.class
         );
-        if(!response.hasBody() && response.getStatusCode().equals(HttpStatusCode.valueOf(201)) ){
+        if(response.hasBody() && response.getBody()!=null && response.getStatusCode().equals(HttpStatusCode.valueOf(201)) ){
             return fakestoreProductDto.from(response.getBody());
         }
         return null;
