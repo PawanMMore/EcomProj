@@ -20,22 +20,10 @@ public class ProductController {
         this.productService= productService;
     }
 
-    @PutMapping("/products/{productId}")
-    ProductDTO updateProduct(@PathVariable("productId") Long productId, @RequestBody ProductDTO productDTO){
-        Product product = productService.replaceProduct(productDTO.fromProductDtoToProduct(),productId);
-        if(product != null){
-            return product.from();
-        }
-        return null;
-    }
-
-    @PostMapping("/products")
-    ProductDTO createProduct(@RequestBody ProductDTO productRequestDTO){
-        ProductDTO productReponseDTO = productService.createProduct(productRequestDTO.fromProductDtoToProduct()).from();
-        if(productReponseDTO!= null){
-            return productReponseDTO;
-        }
-        return  null;
+    @PostMapping("/newProduct")
+    ProductReponseDTO createProduct(@RequestBody ProductDTO productRequestDTO){
+        ProductReponseDTO productReponseDTO = new ProductReponseDTO();
+        return  productReponseDTO;
     }
 
     @GetMapping("/products/{id}")
@@ -51,16 +39,10 @@ public class ProductController {
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/products")
-    List<ProductDTO> getAllProducts(){
-        List<ProductDTO> productDTOS = new ArrayList<>();
-        List<Product> products = productService.getAllProducts();
-        if(products != null){
-            for(Product product: products){
-                productDTOS.add(product.from());
-            }
-        }
-        return productDTOS;
-    }
+//    @GetMapping("/products")
+//    List<ProductReponseDTO> getAllProducts(){
+//        List<ProductReponseDTO> products = new ArrayList<>();
+//        return products;
+//    }
 
 }
