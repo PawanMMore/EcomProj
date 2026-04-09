@@ -4,6 +4,7 @@ import com.pawan.productcatalogservice.dtos.ProductReponseDTO;
 import com.pawan.productcatalogservice.dtos.ProductDTO;
 import com.pawan.productcatalogservice.models.Product;
 import com.pawan.productcatalogservice.services.IProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,13 @@ public class ProductController {
 
     IProductService productService;
 
-    public ProductController(IProductService productService){
+    public ProductController(@Qualifier("storageProductService") IProductService productService){
         this.productService= productService;
-    }
+    }//using @Qualifier annotation
+
+//    public ProductController(IProductService productService){
+//        this.productService= productService;
+//    }//Using for @Primary annotation
 
     @PutMapping("/products/{productId}")
     ProductDTO updateProduct(@PathVariable("productId") Long productId,
@@ -34,11 +39,12 @@ public class ProductController {
     }
 
 
-        @PostMapping("/products")
+    @PostMapping("/products")
     ProductDTO createProduct(@RequestBody ProductDTO productRequestDTO){
         ProductDTO productReponseDTO = productService.createProduct(productRequestDTO.fromProductDtoToProduct()).from();
         return  productReponseDTO;
     }
+
 
     @GetMapping("/products/{id}")
     ResponseEntity<ProductDTO> getProductByProductId(@PathVariable("id") Long id){
@@ -52,6 +58,7 @@ public class ProductController {
         ProductDTO productDTO = product.from();
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
+
 
     @GetMapping("/products")
     List<ProductDTO> getAllProducts(){

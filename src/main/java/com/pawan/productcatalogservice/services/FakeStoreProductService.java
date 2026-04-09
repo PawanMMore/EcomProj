@@ -35,12 +35,12 @@ public class FakeStoreProductService implements IProductService{
 
 
     @Override
-    public Product getProductById(Long id) {
+    public Product getProductById(Long productId) {
         ResponseEntity<FakestoreProductDto> fakestoreProductDtoResponseEntity=
                 restTemplate.getForEntity(
                         "https://fakestoreapi.com/products/{id}",
                         FakestoreProductDto.class,
-                        id
+                        productId
                 );
 
         if(fakestoreProductDtoResponseEntity.hasBody() &&
@@ -71,8 +71,8 @@ public class FakeStoreProductService implements IProductService{
     }
 
     @Override
-    public Product createProduct(Product newProduct) {
-        FakestoreProductDto fakestoreProductDto = newProduct.toFakestoreProductDto();
+    public Product createProduct(Product inputProduct) {
+        FakestoreProductDto fakestoreProductDto = inputProduct.toFakestoreProductDto();
         ResponseEntity<FakestoreProductDto> response = restTemplate.postForObject(
                 "https://fakestoreapi.com/products",
                 fakestoreProductDto,

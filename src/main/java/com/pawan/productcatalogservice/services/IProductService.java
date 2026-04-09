@@ -5,8 +5,8 @@ import com.pawan.productcatalogservice.models.Product;
 import java.util.List;
 
 public interface IProductService {
-    Product getProductById(Long id);
+    Product getProductById(Long productId);
     List<Product> getAllProducts();
-    Product createProduct(Product input);
+    Product createProduct(Product inputProduct);
     Product replaceProduct(Product prod, Long productId);
 }
