@@ -41,7 +41,12 @@ public class ProductController {
 
     @PostMapping("/products")
     ProductDTO createProduct(@RequestBody ProductDTO productRequestDTO){
-        ProductDTO productReponseDTO = productService.createProduct(productRequestDTO.fromProductDtoToProduct()).from();
+        ProductDTO productReponseDTO = new ProductDTO();
+
+        Product product = productService.createProduct(productRequestDTO.fromProductDtoToProduct());
+        if(product != null){
+            return product.from();
+        }
         return  productReponseDTO;
     }
 
@@ -49,7 +54,7 @@ public class ProductController {
     @GetMapping("/products/{id}")
     ResponseEntity<ProductDTO> getProductByProductId(@PathVariable("id") Long id){
         if(id < 1){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw  new IllegalArgumentException("Invalid Product ID Zero or Negative");
         }
         Product product = productService.getProductById(id);
         if(product == null){

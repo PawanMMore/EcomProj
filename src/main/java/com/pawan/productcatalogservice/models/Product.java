@@ -13,6 +13,7 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Product extends BaseModel{
+
     private  String productName;
     private String productDescription;
     private Double productPrice;
