@@ -29,8 +29,8 @@ public class ProductController {
     ProductDTO updateProduct(@PathVariable("productId") Long productId,
                              @RequestBody ProductDTO productDTO){
         ProductDTO responseDto = new ProductDTO();
-        Product product = productService.replaceProduct(productDTO.fromProductDtoToProduct(),
-                productId);
+        Product product = productService.replaceProduct(productDTO.
+                fromProductDtoToProduct(),productId);
 
         if(product != null){
             return product.from();
@@ -43,7 +43,8 @@ public class ProductController {
     ProductDTO createProduct(@RequestBody ProductDTO productRequestDTO){
         ProductDTO productReponseDTO = new ProductDTO();
 
-        Product product = productService.createProduct(productRequestDTO.fromProductDtoToProduct());
+        Product product = productService.createProduct(productRequestDTO.
+                fromProductDtoToProduct());
         if(product != null){
             return product.from();
         }
@@ -53,8 +54,10 @@ public class ProductController {
 
     @GetMapping("/products/{id}")
     ResponseEntity<ProductDTO> getProductByProductId(@PathVariable("id") Long id){
-        if(id < 1){
+        if(id < 0){
             throw  new IllegalArgumentException("Invalid Product ID Zero or Negative");
+        }else if(id ==0){
+            throw new IllegalArgumentException("Products exist with positive id");
         }
         Product product = productService.getProductById(id);
         if(product == null){
