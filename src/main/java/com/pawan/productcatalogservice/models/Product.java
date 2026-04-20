@@ -1,5 +1,6 @@
 package com.pawan.productcatalogservice.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pawan.productcatalogservice.dtos.CategoryDTO;
 import com.pawan.productcatalogservice.dtos.FakestoreProductDto;
 import com.pawan.productcatalogservice.dtos.ProductDTO;
@@ -20,6 +21,7 @@ public class Product extends BaseModel{
     private String imageURL;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Category category;
 
     //conver product to fakstoreProductDto
